@@ -418,3 +418,17 @@ The Solidity version 0.8.20 employs the recently introduced PUSH0 opcode in the 
 
 It is recommended to verify whether solution can be deployed on particular blockchain with the Solidity version 0.8.20 >=. Whenever such deployment is not possible due to lack of PUSH0 opcode support and lowering the Solidity version is a must, it is strongly advised to review all feature changes and bugfixes in [Solidity releases](https://soliditylang.org/blog/category/releases/). Some changes may have impact on current implementation and may impose a necessity of maintaining another version of solution.
 
+
+### Use transfer libraries instead of low level calls
+Consider using `SafeTransferLib.safeTransferETH` or `Address.sendValue` for clearer semantic meaning instead of using a low level call.
+
+```solidity
+Path: ./src/blast/BlastGovernor.sol
+
+54:        (success, result) = to.call{value: value}(data);	// @audit-issue
+```
+[54](https://github.com/code-423n4/2024-03-abracadabra-money/blob/5da03be9e6bb3c6081ffea4ae4bfa441f1cc2fdd/./src/blast/BlastGovernor.sol#L54-L54), 
+
+#### Recommendation
+To improve code readability and safety, consider using higher-level transfer libraries like `SafeTransferLib.safeTransferETH` or `Address.sendValue` instead of low-level calls for handling Ether transfers. These libraries provide clearer semantic meaning and help prevent common pitfalls associated with low-level calls.
+
