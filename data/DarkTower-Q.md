@@ -17,3 +17,23 @@ Consider removing `onlySupportedTokens(token)` modifier for withdrawals.
         emit LogWithdraw(msg.sender, token, amount);
     }
 ```
+
+## [N-01] Typo in the `_udpateUserRewards` function naming
+As can be seen from the title of this log and in the codebase, the function to update user rewards has a typo and should be corrected.
+
+- (LockingMultiRewards.sol#L536-L539)[https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L536-L539]
+
+```js
+function _udpateUserRewards(address user_, uint256 balance_, address token_, uint256 rewardPerToken_) internal {
+    rewards[user_][token_] = _earned(user_, balance_, token_, rewardPerToken_);
+    userRewardPerTokenPaid[user_][token_] = rewardPerToken_;
+}
+```
+
+```diff
+- function _udpateUserRewards(address user_, uint256 balance_, address token_, uint256 rewardPerToken_) internal {
++ function _updateUserRewards(address user_, uint256 balance_, address token_, uint256 rewardPerToken_) internal {
+    rewards[user_][token_] = _earned(user_, balance_, token_, rewardPerToken_);
+    userRewardPerTokenPaid[user_][token_] = rewardPerToken_;
+}
+```
