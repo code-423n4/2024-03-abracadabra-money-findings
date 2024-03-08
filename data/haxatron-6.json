@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "haxatron",
+  "risk": "3",
+  "title": "Gas yield from `BlastOnboardingBoot` proxy will be sent to address(0) because on unitialized `feeTo`",
+  "issueId": 6,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/6"
+}
