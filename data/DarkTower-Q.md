@@ -18,6 +18,17 @@ Consider removing `onlySupportedTokens(token)` modifier for withdrawals.
     }
 ```
 
+## [R-01] Consider a clearer naming for the maximum boost multiplier that can be set in basis points
+
+The `BIPS` variable caps the maximum boost multiplier at 100%. It could do well to be renamed to `MAX_BIPS` for better code readability.
+
+- (LockingMultiRewards.sol#L78)[https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L78]
+
+```diff
+- uint256 private constant BIPS = 10_000;
++ uint256 private constant MAX_BIPS = 10_000;
+```
+
 ## [N-01] Typo in the `_udpateUserRewards` function naming
 As can be seen from the title of this log and in the codebase, the function to update user rewards has a typo and should be corrected.
 
