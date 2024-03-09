@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0xSurya_Alpha",
+  "risk": "3",
+  "title": "[H-01] Initializing function is not working as intended in `MagicLP.sol`",
+  "issueId": 17,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/17"
+}
