@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0xweb3boy",
+  "risk": "2",
+  "title": "ChainLink pricer is using a deprecated API",
+  "issueId": 11,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/11"
+}
