@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "haxatron",
+  "risk": "2",
+  "title": "In `BlastOnboardingBoot.sol` shares are allocated as if 1 USDB = 1 MIM which is not the case",
+  "issueId": 19,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/19"
+}
