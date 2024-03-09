@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "dd0x7e8",
+  "risk": "2",
+  "title": "Return value of low level `call` not checked",
+  "issueId": 21,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/21"
+}
