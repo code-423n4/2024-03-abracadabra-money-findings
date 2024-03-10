@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0xJaeger",
+  "risk": "3",
+  "title": "minLockAmount potential DoS",
+  "issueId": 39,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/39"
+}
