@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "ZanyBonzy",
+  "risk": "2",
+  "title": "`_twapUpdate` should not take price after first transaction in a block.",
+  "issueId": 31,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/31"
+}
