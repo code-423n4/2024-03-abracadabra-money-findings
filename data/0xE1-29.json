@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0xE1",
+  "risk": "2",
+  "title": "processExpiredLocks is vulnerable to DoS attack",
+  "issueId": 29,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/29"
+}
