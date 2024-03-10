@@ -184,7 +184,7 @@ The contract `BlastMagicLP` is using the state variable `registry` multiple time
 
 https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/blast/BlastMagicLP.sol#L53-L62
 
-The contract `BlastMagicLP` is using the state variable registry multiple times in the function `_updateTokenClaimables`. 
+The contract `BlastMagicLP` is using the state variable `registry` multiple times in the function `_updateTokenClaimables`. 
 
 https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/blast/BlastMagicLP.sol#L104-L112
 
@@ -215,6 +215,76 @@ https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/L
 The contract `LockingMultiRewards` is using the state variable `lastLockIndex` multiple times in the function `_createLock`. 
 
 https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L479-L514
+
+## [G-08] CHEAPER INEQUALITIES IN IF()
+
+The contract was found to be doing comparisons using inequalities inside the if statement.
+
+When inside the if statements, non-strict inequalities `(>=, <=)` are usually cheaper than the strict equalities `(>, <)`.
+
+It is recommended to go through the code logic, and, if possible, modify the strict inequalities with the non-strict ones to save ~3 gas as long as the logic of the code is not affected.
+
+**Instances**: 14
+
+>if (totalPoolShares < minAmountOut)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/blast/BlastOnboardingBoot.sol#L108-L108
+
+>if (remainder > 0)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/libraries/Math.sol#L22-L22
+
+>if (caps[token] > 0 && totals[token].total > caps[token])
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/blast/BlastOnboarding.sol#L114-L114
+
+>if (_lockDuration < MIN_LOCK_DURATION) 
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L123-L123
+
+>if (_rewardsDuration < MIN_REWARDS_DURATION)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L127-L127
+
+>if (_remainingRewardTime < minRemainingTime)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L374-L374
+
+>if (block.timestamp < reward.periodFinish)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L379-L379
+
+>if (amount < _remainingRewardTime)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L384-L384
+
+>if (lockCount == 0 || _userLocks[user][_lastLockIndex].unlockTime < _nextUnlockTime)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/staking/LockingMultiRewards.sol#L490-L490
+
+>if (msg.value > wethAdjustedAmount)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol#L220-L220
+
+>if (shares < minimumShares)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol#L502-L502
+
+>if (amountOut < minimumOut)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol#L566-L566
+
+>if (amountOut < minimumOut)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol#L573-L573
+
+>if (amountOut < minimumOut)
+
+https://github.com//code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol#L581-L581
+
+
+
+ 
 
 
 
