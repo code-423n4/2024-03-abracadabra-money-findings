@@ -57,7 +57,42 @@ Remove the whenNotPaused modifier from the `withdraw` function
 
 ***
 
-# 3. Return value of chainlink's `latestRoundData` should be well validated 
+# 3. `_twapUpdate` can be dossed due to potential underflow error
+
+Links to affected code *
+
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L546
+
+### Impact
+
+The a normalization of the block.timestamp value to uint32 in the `_twapUpdate` function will throw an underflow error due to the solidity version in use and the potential of block.timestamp to exceed type(uint32).max.
+
+```
+    function _twapUpdate() internal {
+        uint32 blockTimestamp = uint32(block.timestamp % 2 ** 32);
+        uint32 timeElapsed = blockTimestamp - _BLOCK_TIMESTAMP_LAST_;
+
+        if (timeElapsed > 0 && _BASE_RESERVE_ != 0 && _QUOTE_RESERVE_ != 0) {
+            /// @dev It is desired and expected for this value to
+            /// overflow once it has hit the max of `type.uint256`.
+            unchecked {
+                _BASE_PRICE_CUMULATIVE_LAST_ += getMidPrice() * timeElapsed;
+            }
+        }
+
+        _BLOCK_TIMESTAMP_LAST_ = blockTimestamp;
+    }
+```
+### Recommended Mitigation Steps
+Consider wrapping the `timeElapsed` in an unchecked block.
+```
+    unchecked {
+        uint32 timeElapsed = blockTimestamp - _BLOCK_TIMESTAMP_LAST_;
+    }
+```
+***
+
+# 4. Return value of chainlink's `latestRoundData` should be well validated 
 
 Lines of code* 
 
@@ -80,7 +115,7 @@ Include a check for negative or zero values.
 Consider also checking for the roundid, startedAt and updatedAt time too.
 ***
 
-# 4. Should check for active sequencer uptime 
+# 5. Should check for active sequencer uptime 
 
 Lines of code* 
 
@@ -94,7 +129,7 @@ Include a function to call for active sequencer.`
 
 ***
 
-# 5. Add explicit check for lowlevel call success/failure return value 
+# 6. Add explicit check for lowlevel call success/failure return value 
 
 Lines of code* 
 
@@ -111,7 +146,7 @@ Including an explicit check for return values of low level calls can help preven
 
 ***
 
-# 6. Add checks for same parameter updates
+# 7. Add checks for same parameter updates
 
 Lines of code* 
 
