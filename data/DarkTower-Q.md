@@ -33,7 +33,19 @@ Therefore, these tokens will get stuck in the contract until it supports these t
 
 Consider removing `onlySupportedTokens(token)` modifier for withdrawals and rescues
 
-## [L-02]: `BlastMagicLP` implementation do not configure gas yield.
+## [L-02]: `FeeRateModel.sol`, `FeeRateModelImpl.sol`, `BlastTokenRegistry.sol` do not configure gas yield.
+
+The constructors for the following contracts do not configure gas yield on Blast:
+
+1. https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/blast/BlastTokenRegistry.sol
+
+2. https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/auxiliary/FeeRateModel.sol
+
+3. https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/auxiliary/FeeRateModelImpl.sol
+
+Gas yield for these files won't be substantial so this is marked as low.
+
+## [L-03]: `BlastMagicLP` implementation do not configure gas yield.
 
 The implementation `BlastMagicLP` does not configure the gas yield mode in the constructor.
 
