@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hihen",
+  "risk": "2",
+  "title": "The `_getReserves` function always returns 0",
+  "issueId": 55,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/55"
+}
