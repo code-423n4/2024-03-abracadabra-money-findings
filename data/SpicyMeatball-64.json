@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "SpicyMeatball",
+  "risk": "3",
+  "title": "MagicLpAggregator uses \"unnormalized\" totalSupply value to calculate the pair price",
+  "issueId": 64,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/64"
+}
