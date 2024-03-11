@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "ravikiranweb3",
+  "risk": "3",
+  "title": "BlastCauldronV4::init() can be called by anyone initializing CauldronV4 contract",
+  "issueId": 50,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/50"
+}
