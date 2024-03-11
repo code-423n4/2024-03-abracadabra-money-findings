@@ -4,7 +4,7 @@
 
 
 ## Impact
-The `_rewardPerToken` function, despite being mostly utilized for internal logic and calculations within the contract, has been labeled as a public function. This exposes it to external calls and inputs, potentially leading to unexpected contract behaviors. Given the function's critical role in calculating the sensitive value `REWARDPERTOKEN` for fairness and reward distribution, this exposure poses a security risk.
+The `_rewardPerToken` function, despite being only utilized for internal logic and calculations within the contract, has been labeled as a public function. This exposes it to external calls and inputs, potentially leading to unexpected contract behaviors. Given the function's critical role in calculating the sensitive value `REWARDPERTOKEN` for fairness and reward distribution, this exposure poses a security risk.
 
 ```solidity
     function _rewardPerToken(address rewardToken, uint256 lastTimeRewardApplicable_, uint256 totalSupply_) public view returns (uint256) {
