@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0xJaeger",
+  "risk": "2",
+  "title": "Staking and locking still possible even if contract is paused",
+  "issueId": 61,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/61"
+}
