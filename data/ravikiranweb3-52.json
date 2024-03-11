@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "ravikiranweb3",
+  "risk": "3",
+  "title": "BlastOnboarding::deposit() can result in permanent locking tokens ",
+  "issueId": 52,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/52"
+}
