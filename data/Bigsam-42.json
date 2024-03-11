@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Bigsam",
+  "risk": "2",
+  "title": "Limitation in BlastOnboarding.sol will lead to the inability to delist tokens that are no longer supported by the contract",
+  "issueId": 42,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/42"
+}
