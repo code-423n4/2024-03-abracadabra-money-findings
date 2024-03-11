@@ -94,6 +94,9 @@ However, this affects new pools deployed and old pools will still use the old ma
     }
 ```
 
+## [L-05] MagicLP is neither pausable not upgradeable.
+
+[MagicLP](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/MagicLP.sol) is neither pausable nor upgradeable (it uses non-upgradeable clones). We don't believe this to be a good idea because a pool-draining exploit was found it would be nearly impossible to protect all the funds still present in the MagicLP.
 
 ## [R-01] Consider a clearer naming for the maximum boost multiplier that can be set in basis points
 
