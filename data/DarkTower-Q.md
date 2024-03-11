@@ -66,6 +66,35 @@ The implementation `BlastMagicLP` does not configure the gas yield mode in the c
 
 Since there will still be operations carried out on the implementation contract for admin configuration purposes, it might be best to configure the yield mode by calling `BlastYields.configureDefaultClaimables(address(this))` in the constructor so that any gas spent on implementation contract can be reclaimed.
 
+## [L-04] The maintainer fee model can be changed in the Factory
+
+The maintainer fee model can be changed in the Factory for new MagicLPs deployed.
+
+[Factory.sol#L105-L112](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Factory.sol#L105-L112)
+```solidity
+    function setMaintainerFeeRateModel(IFeeRateModel maintainerFeeRateModel_) external onlyOwner {
+        if (address(maintainerFeeRateModel_) == address(0)) {
+            revert ErrZeroAddress();
+        }
+
+        maintainerFeeRateModel = maintainerFeeRateModel_;
+        emit LogSetMaintainerFeeRateModel(maintainerFeeRateModel_);
+    }
+```
+
+However, this affects new pools deployed and old pools will still use the old maintainer fee model leading to different pools potentially having different fee models which breaks consistency. The maintainer fee rate model contract already has a function to change the rate model implementation and therefore such a function in the factory isn't required.
+
+[FeeRateModel.sol#L57-L60](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/auxiliary/FeeRateModel.sol#L57-L60)
+```solidity
+    /// @notice Set the fee rate implementation and default fee rate
+    /// @param implementation_ The address of the fee rate implementation, use address(0) to disable
+    function setImplementation(address implementation_) public onlyOwner {
+        implementation = implementation_;
+        emit LogImplementationChanged(implementation_);
+    }
+```
+
+
 ## [R-01] Consider a clearer naming for the maximum boost multiplier that can be set in basis points
 
 The `BIPS` variable caps the maximum boost multiplier at 100%. It could do well to be renamed to `MAX_BIPS` for better code readability.
