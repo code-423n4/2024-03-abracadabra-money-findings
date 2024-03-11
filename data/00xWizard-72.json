@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "00xWizard",
+  "risk": "2",
+  "title": "Internal function used but not defined",
+  "issueId": 72,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/72"
+}
