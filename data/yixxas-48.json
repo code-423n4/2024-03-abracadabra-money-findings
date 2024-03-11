@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "yixxas",
+  "risk": "2",
+  "title": "Staking contract is not able to support native USDB/WETH",
+  "issueId": 48,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/48"
+}
