@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "ravikiranweb3",
+  "risk": "2",
+  "title": "LockingMultiRewards::recover() opens a backdoor for rug-pull",
+  "issueId": 59,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/59"
+}
