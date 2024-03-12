@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "haxatron",
+  "risk": "2",
+  "title": "`MagicLpAggregator` can be incompatible with potential integrators due to improper `latestRoundData`",
+  "issueId": 93,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/93"
+}
