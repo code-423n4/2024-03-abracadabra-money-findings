@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "alphacipher",
+  "risk": "2",
+  "title": "Use of deprecated Chainlink function `latestAnswer`",
+  "issueId": 220,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/220"
+}
