@@ -1,8 +1,0 @@
-{
-  "contest": 349,
-  "handle": "haxatron",
-  "risk": "3",
-  "title": "`MagicLPAggregator` will return wrong price for tokens less than 18 decimals.",
-  "issueId": 165,
-  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/165"
-}
