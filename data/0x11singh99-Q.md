@@ -1,4 +1,6 @@
-# Low-Severity
+## Total **5**  Low-severity Findings and **7**  Non-Critical
+
+# Low-Severity Findings
 
 ## [L-01] Missing `address(0)` check in `constructor`
 
