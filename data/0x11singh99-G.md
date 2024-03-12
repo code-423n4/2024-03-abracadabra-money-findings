@@ -12,7 +12,7 @@
 
 - [G-04] [State variable only set in the constructor should be declare immutable (**Gas Saved ~2100 Gas**)](#g-04-state-variables-only-set-in-the-constructor-should-be-declared-immutablegas-saved-2100-gas)
 
-- [G-05] [Check before updating bool state variable to avoid with same bool value](#g-05-check-before-updating-bool-state-variable-to-avoid-with-same-bool-value)
+- [G-05] [Check before updating bool state variable to avoid with same bool value(Saves ~800 Gas)](#g-05-check-before-updating-bool-state-variable-to-avoid-with-same-bool-value)
 
 - [G-06] [Multiple address/ID mappings can be combined into a single mapping of an address/ID to a struct](#g-06-multiple-addressid-mappings-can-be-combined-into-a-single-mapping-of-an-addressid-to-a-struct)
 
