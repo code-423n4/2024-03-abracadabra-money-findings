@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0x11singh99",
+  "risk": "3",
+  "title": "`MagicLpAggregator::latestAnswer` function will **always return 0** due to missing return in `_getReserves` function breaking all the logic wherever it is used to get price.",
+  "issueId": 167,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/167"
+}
