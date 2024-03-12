@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "seerether",
+  "risk": "3",
+  "title": "The mismatch between the lengths of the rewardTokens array and the items array in the _userRewardLock struct can lead to  potential vulnerabilities.",
+  "issueId": 157,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/157"
+}
