@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Bauchibred",
+  "risk": "2",
+  "title": "LockingMultiRewards::notifyRewardAmount() could cause some rewards to be unaccounted for",
+  "issueId": 139,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/139"
+}
