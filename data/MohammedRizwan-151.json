@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "In `BlastGovernor.sol`, `execute()` function is not payable",
+  "issueId": 151,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/151"
+}
