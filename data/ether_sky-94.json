@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "ether_sky",
+  "risk": "2",
+  "title": "The MagicLP will be halted after 2106 when the block timestamp exceeds the maximum value of uint32.",
+  "issueId": 94,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/94"
+}
