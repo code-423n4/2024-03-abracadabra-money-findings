@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "0x_Marc",
+  "risk": "2",
+  "title": "The missing success check in a low-level call can lead to unexpected behavior and potential security risks.",
+  "issueId": 102,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/102"
+}
