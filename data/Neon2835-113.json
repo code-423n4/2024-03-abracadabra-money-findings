@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Neon2835",
+  "risk": "3",
+  "title": "There is a vulnerability in the reward distribution method of the LockingMultiRewards contract, and latecomers can still receive rewards that do not belong to them.",
+  "issueId": 113,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/113"
+}
