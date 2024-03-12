@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "AgileJune",
+  "risk": "2",
+  "title": "LockingMultiRewards.sol, Users can get rewards less than expected amount because of rounding error on calculation of rewardRate.",
+  "issueId": 134,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/134"
+}
