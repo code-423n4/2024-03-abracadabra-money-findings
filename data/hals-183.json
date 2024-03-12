@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hals",
+  "risk": "2",
+  "title": "The staker will lose from his accumulated rewards if his locks are expired and processed by the operator",
+  "issueId": 183,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/183"
+}
