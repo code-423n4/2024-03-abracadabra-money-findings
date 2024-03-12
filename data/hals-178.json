@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hals",
+  "risk": "2",
+  "title": "`MagicLp.buyShares()`: a malicious actor can mint himself the `totalSupply` of the shares token with dust amounts if the reserves are empty",
+  "issueId": 178,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/178"
+}
