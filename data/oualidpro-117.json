@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "oualidpro",
+  "risk": "2",
+  "title": "Unchecked return value of low-level `call()`",
+  "issueId": 117,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/117"
+}
