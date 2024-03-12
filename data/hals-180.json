@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hals",
+  "risk": "2",
+  "title": "`LockingMultiRewards` contract: users will be able to claim more rewards than they are entitled to by calling `withdrawWithRewards()`",
+  "issueId": 180,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/180"
+}
