@@ -1,0 +1,1 @@
+In BlastMagicLP, all the fees including blast-related money and handling fee are transferred to a feeTo address, and the LP didn't get the fee and blast-related money it should have gotten
