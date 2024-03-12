@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "In `MagicLpAggregator.latestAnswer()` and `MagicLpAggregator.latestRoundData()`, there is missing check for active Arbitrum Sequencer",
+  "issueId": 163,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/163"
+}
