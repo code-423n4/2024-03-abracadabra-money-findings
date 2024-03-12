@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "grearlake",
+  "risk": "2",
+  "title": "Griefing attack: small stakes reward griefing due to rounding down to 0",
+  "issueId": 166,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/166"
+}
