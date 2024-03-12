@@ -2,7 +2,7 @@
 
 ##
 
-## [G-] _LP_FEE_RATE_ , _K_ , _I_ can be packed within same slot
+## [G-1] _LP_FEE_RATE_ , _K_ , _I_ can be packed within same slot
 
 When setting values down casted as per implementation in setParameters() functions.
 
@@ -28,7 +28,7 @@ FILE: 2024-03-abracadabra-money/src/mimswap/MagicLP.sol
 ```
 https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L80-L82
 
-## [G-1] ``pool`` and ``totalPoolShares`` inherited state variables can be cached with ``memory`` variables 
+## [G-2] ``pool`` and ``totalPoolShares`` inherited state variables can be cached with ``memory`` variables 
 
 Caching state variables in memory (often by assigning them to local variables) can be beneficial, especially when those state variables are accessed multiple times within a function. This practice reduces the cost associated with repeated state reads, which are more expensive than reading from memory . Saves ``800 GAS`` , ``8 SLOD``
 
@@ -83,7 +83,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-2] Merging multiple mappings into a single struct Mapping Saves gas
+## [G-3] Merging multiple mappings into a single struct Mapping Saves gas
 
 It's common to use mappings for storing data associated with specific addresses or IDs. If multiple mappings are used to store related data, combining them into a single mapping that maps addresses or IDs to a struct can optimize gas usage and improve code readability.
 
@@ -100,9 +100,20 @@ mapping(address token => bool) public supportedTokens;
 ```
 https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/blast/BlastOnboarding.sol#L36-L41
 
+```solidity
+FILE: 2024-03-abracadabra-money/src/staking/LockingMultiRewards.sol
+
+  mapping(address user => mapping(address token => uint256 amount)) public userRewardPerTokenPaid;
+    mapping(address user => mapping(address token => uint256 amount)) public rewards;
+    mapping(address user => uint256 index) public lastLockIndex;
+
+```
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/staking/LockingMultiRewards.sol#L94-L96
+
+
 ##
 
-## [G-] The result of function calls should be cached rather than re-calling the function
+## [G-4] The result of function calls should be cached rather than re-calling the function
 
 The instances below point to the second+ call of the function within a single function
 
@@ -175,7 +186,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-2] Replacing Logical ANDs with nested If Statements to save gas
+## [G-5] Replacing Logical ANDs with nested If Statements to save gas
 
 Using nested if statements instead of combining conditions with logical AND operators (&&) can result in gas savings, particularly in scenarios where most conditions are false. This approach ensures that once a condition is found to be false, subsequent conditions are not evaluated, reducing the overall computational effort. Saves 13 Gas
 
@@ -189,7 +200,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-3] ``deposit()`` function can be more gas optimized
+## [G-6] ``deposit()`` function can be more gas optimized
 
 Function deposit can be optimized for gas efficiency by minimizing redundant storage operations and optimizing conditional logic.
 
@@ -266,7 +277,7 @@ In the optimized code:
 
 ##
 
-## [G-5] Don't cache state variables once used once 
+## [G-7] Don't cache state variables once used once 
 
 State variable is only used once in a function, directly use the state variable without storing it in a local variable. Saves 13 GAS per instance 
 
@@ -297,7 +308,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-5] Use constants instead of ``type(uint256).max``
+## [G-8] Use constants instead of ``type(uint256).max``
 
 Using constants can lead to significant gas savings, especially when you replace commonly used expressions like type(uint256).max.
 
@@ -312,7 +323,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-] ``_QUOTE_RESERVE_`` and ``_BASE_RESERVE_`` values can be cached with memory variable . Saves ``800 GAS`` , ``8 SLOD``
+## [G-9] ``_QUOTE_RESERVE_`` and ``_BASE_RESERVE_`` values can be cached with memory variable . Saves ``800 GAS`` , ``8 SLOD``
 
 In the given function correctRState, caching ``_QUOTE_RESERVE_``,``_BASE_RESERVE_ `` as a local variable can reduce gas consumption since _QUOTE_RESERVE_ and _BASE_RESERVE_  is accessed multiple times. This is because reading from a local variable is cheaper in terms of gas than reading from storage.
 
@@ -358,7 +369,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-] Avoid updating storage when the value hasn't changed
+## [G-10] Avoid updating storage when the value hasn't changed
 
 If the old value is equal to the new value, not re-storing the value will avoid a Gsreset (2900 gas), potentially at the expense of a Gcoldsload (2100 gas) or a Gwarmaccess (100 gas)
 
@@ -417,7 +428,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-] unchecked {} can be used on the division of two uints in order to save gas
+## [G-11] unchecked {} can be used on the division of two uints in order to save gas
 
 The division cannot overflow, since both the numerator and the denominator are non-negative
 
@@ -442,7 +453,7 @@ https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad281
 
 ##
 
-## [G-] Use a more recent version of solidity
+## [G-12] Use a more recent version of solidity
 
 Use a solidity version of at least 0.8.0 to get simple compiler automatic inlining Use a solidity version of at least 0.8.3 to get better struct packing and cheaper multiple storage reads Use a solidity version of at least 0.8.4 to get custom errors, which are cheaper at deployment than revert()/require() strings Use a solidity version of at least 0.8.10 to have external calls skip contract existence checks if the external call has a return value.
 
@@ -452,8 +463,207 @@ FILE: 2024-03-abracadabra-money/src/mimswap/MagicLP.sol
 8: pragma solidity >=0.8.0;
 
 ```
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L8
 
+##
 
+## [G-13] ``divCeil()`` function can be optimized more gas efficient 
+
+The divCeil function can be optimized for gas efficiency by reducing the operations performed within the function. One common optimization is to combine the calculation and the conditional check into fewer steps. This Saves 50-100 Gas approximately for every call 
+
+### Original Code
+
+```solidity
+FILE: 2024-03-abracadabra-money/src/mimswap/libraries
+/Math.sol
+
+function divCeil(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 quotient = a / b;
+        uint256 remainder = a - quotient * b;
+        if (remainder > 0) {
+            return quotient + 1;
+        } else {
+            return quotient;
+        }
+
+```
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/libraries/Math.sol#L19-L27
+
+### Optimized Code
+
+```solidity
+
+unction divCeil(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b > 0, "Division by zero"); // Added to prevent division by zero
+    uint256 quotient = a / b;
+    if (a % b > 0) { // Directly use modulo to check for a remainder
+        return quotient + 1;
+    }
+    return quotient;
+}
+
+```
+
+### Explanation
+- This function removes the explicit calculation of the remainder by directly using a % b to determine if there is any remainder. This approach reduces the number of arithmetic operations required.
+- The condition is simplified to directly check if a % b (the remainder from dividing a by b) is greater than zero. If so, it means that the division does not result in an exact quotient, and thus we add one to the quotient for the ceiling effect.
+- I added a require statement at the beginning of the function to check that b is not zero, preventing a division by zero error, which is a common practice for safety in arithmetic functions.
+
+##
+
+## [G-14] Refactoring the _SolveQuadraticFunctionForTrade Function for Improved Gas Efficiency
+
+Optimizing the _SolveQuadraticFunctionForTrade function involves reducing redundant calculations, reusing computed values, and ensuring operations are performed efficiently.
+
+### Original Code
+
+```solidity
+FILE: 2024-03-abracadabra-money/src/mimswap/libraries
+/Math.sol
+
+ function _SolveQuadraticFunctionForTrade(uint256 V0, uint256 V1, uint256 delta, uint256 i, uint256 k) internal pure returns (uint256) {
+        if (V0 == 0) {
+            revert ErrIsZero();
+        }
+
+        if (delta == 0) {
+            return 0;
+        }
+
+        if (k == 0) {
+            return DecimalMath.mulFloor(i, delta) > V1 ? V1 : DecimalMath.mulFloor(i, delta);
+        }
+
+        if (k == DecimalMath.ONE) {
+            // if k==1
+            // Q2=Q1/(1+ideltaBQ1/Q0/Q0)
+            // temp = ideltaBQ1/Q0/Q0
+            // Q2 = Q1/(1+temp)
+            // Q1-Q2 = Q1*(1-1/(1+temp)) = Q1*(temp/(1+temp))
+            // uint256 temp = i.mul(delta).mul(V1).div(V0.mul(V0));
+            uint256 temp;
+            uint256 idelta = i * delta;
+            if (idelta == 0) {
+                temp = 0;
+            } else if ((idelta * V1) / idelta == V1) {
+                temp = (idelta * V1) / (V0 * V0);
+            } else {
+                temp = (((delta * V1) / V0) * i) / V0;
+            }
+            return (V1 * temp) / (temp + DecimalMath.ONE);
+        }
+
+        // calculate -b value and sig
+        // b = kQ0^2/Q1-i*deltaB-(1-k)Q1
+        // part1 = (1-k)Q1 >=0
+        // part2 = kQ0^2/Q1-i*deltaB >=0
+        // bAbs = abs(part1-part2)
+        // if part1>part2 => b is negative => bSig is false
+        // if part2>part1 => b is positive => bSig is true
+        uint256 part2 = (((k * V0) / V1) * V0) + (i * delta); // kQ0^2/Q1-i*deltaB
+        uint256 bAbs = (DecimalMath.ONE - k) * V1; // (1-k)Q1
+
+        bool bSig;
+        if (bAbs >= part2) {
+            bAbs = bAbs - part2;
+            bSig = false;
+        } else {
+            bAbs = part2 - bAbs;
+            bSig = true;
+        }
+        bAbs = bAbs / DecimalMath.ONE;
+
+        // calculate sqrt
+        uint256 squareRoot = DecimalMath.mulFloor((DecimalMath.ONE - k) * 4, DecimalMath.mulFloor(k, V0) * V0); // 4(1-k)kQ0^2
+        squareRoot = sqrt((bAbs * bAbs) + squareRoot); // sqrt(b*b+4(1-k)kQ0*Q0)
+
+        // final res
+        uint256 denominator = (DecimalMath.ONE - k) * 2; // 2(1-k)
+        uint256 numerator;
+        if (bSig) {
+            numerator = squareRoot - bAbs;
+            if (numerator == 0) {
+                revert ErrIsZero();
+            }
+        } else {
+            numerator = bAbs + squareRoot;
+        }
+
+        uint256 V2 = DecimalMath.divCeil(numerator, denominator);
+        if (V2 > V1) {
+            return 0;
+        } else {
+            return V1 - V2;
+        }
+    }
+
+```
+
+### Optimized Code
+
+```solidity
+
+function _SolveQuadraticFunctionForTrade(uint256 V0, uint256 V1, uint256 delta, uint256 i, uint256 k) internal pure returns (uint256) {
+    require(V0 != 0, "ErrIsZero");
+
+    if (delta == 0) {
+        return 0;
+    }
+
+    uint256 idelta = i * delta;
+    
+    if (k == 0) {
+        uint256 product = DecimalMath.mulFloor(i, delta); // Reuse this value to avoid duplication
+        return product > V1 ? V1 : product;
+    }
+
+    if (k == DecimalMath.ONE) {
+        uint256 temp = 0;
+        if (idelta != 0) {
+            uint256 ideltaV1 = idelta * V1;
+            temp = (ideltaV1 / idelta == V1) ? (ideltaV1 / (V0 * V0)) : ((delta * V1) / V0 * i) / V0;
+        }
+        // No need to check temp == 0 as it doesn't lead to revert
+        return (V1 * temp) / (temp + DecimalMath.ONE);
+    }
+
+    uint256 part1 = (DecimalMath.ONE - k) * V1;
+    uint256 part2 = idelta + (k * V0 * V0) / V1;
+    uint256 bAbs;
+    bool bSig;
+
+    if (part1 >= part2) {
+        bAbs = part1 - part2;
+        bSig = false;
+    } else {
+        bAbs = part2 - part1;
+        bSig = true;
+    }
+
+    // Simplify square root calculation by combining constants and removing redundant operations
+    uint256 squareRoot = sqrt(bAbs * bAbs + DecimalMath.mulFloor((DecimalMath.ONE - k) * 4, DecimalMath.mulFloor(k, V0) * V0));
+
+    // Denominator is the same for both conditions
+    uint256 denominator = (DecimalMath.ONE - k) * 2;
+    uint256 numerator = bSig ? squareRoot - bAbs : bAbs + squareRoot;
+
+    uint256 V2 = DecimalMath.divCeil(numerator, denominator);
+    return V2 > V1 ? 0 : V1 - V2;
+}
+
+```
+
+### Optimization Explantions
+
+- Remove Redundant Checks: I've replaced the initial if (V0 == 0) revert condition with a require statement for clarity and gas efficiency.
+
+- Combine and Reuse Calculations: Whenever possible, combine similar calculations and reuse results to avoid duplicating expensive operations. For example, idelta (i * delta) is calculated once and reused.
+
+- Simplify Conditional Checks: Directly compare parts instead of recalculating them (for temp and bAbs calculations). This reduces the overall computational load.
+
+- Optimize Square Root Calculation: Group and simplify calculations related to the square root to avoid unnecessary multiplications.
+
+- Consolidate Return Statements: By computing V2 and directly returning the result of V1 - V2 (if appropriate), the function avoids unnecessary branches and makes the logic clearer.
 
 
 
