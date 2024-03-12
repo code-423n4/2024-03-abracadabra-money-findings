@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "HChang26",
+  "risk": "2",
+  "title": "Users can stake when LockingMultiRewards.sol is paused with claiming shares",
+  "issueId": 77,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/77"
+}
