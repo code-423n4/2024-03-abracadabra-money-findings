@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Trust",
+  "risk": "3",
+  "title": "Attacker can amplify a rounding error in MagicLP to break the I invariant and cause malicious pricing",
+  "issueId": 221,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/221"
+}
