@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "AgileJune",
+  "risk": "2",
+  "title": "The Chainlink API (`latestAnswer`) used in the MagicLpAggregator.sol is deprecated",
+  "issueId": 136,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/136"
+}
