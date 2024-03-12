@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hassan-truscova",
+  "risk": "2",
+  "title": " Pausing `BlastOnboarding` contract, which takes effect immediately, by its owner can unexpectedly block users from withdrawing funds",
+  "issueId": 119,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/119"
+}
