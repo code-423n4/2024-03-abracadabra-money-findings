@@ -98,6 +98,10 @@ However, this affects new pools deployed and old pools will still use the old ma
 
 [MagicLP](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/MagicLP.sol) is neither pausable nor upgradeable (it uses non-upgradeable clones). We don't believe this to be a good idea because if a pool-draining exploit was found it would be nearly impossible to protect all the funds still present in the MagicLP.
 
+## [L-06] Router does not verify whether LP provided is a MagicLP
+
+For all swap functions in the [Router](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol), it doesn't validate that the `lp` address provided is an actual MagicLP. While we couldn't find a way to exploit this. Historically, this has been the cause of famous router hacks such as the famous Sushiswap hack - [https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023](https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023)
+
 ## [R-01] Consider a clearer naming for the maximum boost multiplier that can be set in basis points
 
 The `BIPS` variable caps the maximum boost multiplier at 100%. It could do well to be renamed to `MAX_BIPS` for better code readability.
