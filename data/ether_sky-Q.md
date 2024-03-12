@@ -285,3 +285,145 @@ function _resetTargetAndReserve() internal returns (uint256 baseBalance, uint256
 }
 ```
 Should call `_twapUpdate` function before making changes to the `reserves`.
+
+**[L-8] There might be a loss of funds if users directly `invoke` the `buyShares` function within the `MagicLP`.**
+-
+
+In the `buyShares` function, both the `base` and `quote` tokens are deposited in the same `ratio`, and the `shares` are calculated accordingly. 
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L397-L400
+```
+function buyShares(address to) external nonReentrant returns (uint256 shares, uint256 baseInput, uint256 quoteInput) {
+    if (totalSupply() == 0) {
+    } else if (baseReserve > 0 && quoteReserve > 0) {
+        uint256 baseInputRatio = DecimalMath.divFloor(baseInput, baseReserve);
+        uint256 quoteInputRatio = DecimalMath.divFloor(quoteInput, quoteReserve);
+        uint256 mintRatio = quoteInputRatio < baseInputRatio ? quoteInputRatio : baseInputRatio;
+        shares = DecimalMath.mulFloor(totalSupply(), mintRatio);
+    }
+}
+```
+If a user deposits one token in a `higher ratio` than the other, the excess amount cannot be used for calculating `shares`. 
+This means users may lose these funds.
+
+To mitigate this risk, there's an `addLiquidity` function in the `router`.
+However, it's uncertain what will happen if users directly call this function.
+
+And there is also no `minimum shares check`.
+And `transferFrom` is not used to transfer `base` and `quote` tokens from `msg.sender` to this `MagicLP`.
+While these approaches may present vulnerabilities, they can be mitigated when these functions including `buyShares` and `sellShares` are called from the `router`, as the `router` performs relevant checks.
+
+Please ensure that these functions can only be invoked from the `router`.
+
+**[L-9] There's no guarantee that the `locked` amounts of `MIM` and `USDB` tokens will exceed specific thresholds when creating a `MagicLP` through `bootstrap`**
+-
+
+When creating a `MagicLP` using the `locked` `MIM` and `USDB` tokens, there's no verification performed to ensure that the amounts exceed a certain `threshold`.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/blast/BlastOnboardingBoot.sol#L101-L106
+```
+function bootstrap(uint256 minAmountOut) external onlyOwner onlyState(State.Closed) returns (address, address, uint256) {
+    uint256 baseAmount = totals[MIM].locked;
+    uint256 quoteAmount = totals[USDB].locked;
+    MIM.safeApprove(address(router), type(uint256).max);
+    USDB.safeApprove(address(router), type(uint256).max);
+
+    (pool, totalPoolShares) = router.createPool(MIM, USDB, FEE_RATE, I, K, address(this), baseAmount, quoteAmount);
+}
+```
+Users may `lock` more `USDB` tokens than `MIM` tokens. 
+Since `MIM` is the `base` token, the `totalPoolShares` will be based on the amount of `MIM` tokens. 
+If this value is significantly smaller than the amount of `USDB` tokens, the calculation of `claimable shares` for users will be affected by rounding because the `totalPoolShares` are significantly smaller than the `totalLocked` amount.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/blast/BlastOnboardingBoot.sol#L155-L165
+```
+function _claimable(address user) internal view returns (uint256 shares) {
+    uint256 totalLocked = totals[MIM].locked + totals[USDB].locked;
+
+    if (totalLocked == 0) {
+        return 0;
+    }
+
+    uint256 userLocked = balances[user][MIM].locked + balances[user][USDB].locked;
+    return (userLocked * totalPoolShares) / totalLocked;
+}
+```
+This can lead to some dust staking tokens being stuck in the `BlastOnboarding` contract.
+
+Please set the `threshold` for the `locked` amounts of `MIM` and `USDB` tokens.
+
+**[L-10] The `minimum value check` should be conducted after adjusting the `reserves` in the `setParameters` function.**
+-
+
+In `MagicLP`, when updating the parameters, we perform the `minimum value check` at the beginning of the function.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L480-L482
+```
+function setParameters(
+    address assetTo,
+    uint256 newLpFeeRate,
+    uint256 newI,
+    uint256 newK,
+    uint256 baseOutAmount,
+    uint256 quoteOutAmount,
+    uint256 minBaseReserve,
+    uint256 minQuoteReserve
+) public nonReentrant onlyImplementationOwner {
+    if (_BASE_RESERVE_ < minBaseReserve || _QUOTE_RESERVE_ < minQuoteReserve) {
+        revert ErrReserveAmountNotEnough();
+    }
+}
+```
+In this function, we transfer some `base` and `quote` tokens, rendering this check redundant. 
+It should be conducted after reducing the `reserves`.
+```
+function setParameters(
+    address assetTo,
+    uint256 newLpFeeRate,
+    uint256 newI,
+    uint256 newK,
+    uint256 baseOutAmount,
+    uint256 quoteOutAmount,
+    uint256 minBaseReserve,
+    uint256 minQuoteReserve
+) public nonReentrant onlyImplementationOwner {
+-     if (_BASE_RESERVE_ < minBaseReserve || _QUOTE_RESERVE_ < minQuoteReserve) {
+-         revert ErrReserveAmountNotEnough();
+-     }
+    _transferBaseOut(assetTo, baseOutAmount);
+    _transferQuoteOut(assetTo, quoteOutAmount);
+    (uint256 newBaseBalance, uint256 newQuoteBalance) = _resetTargetAndReserve();
+
++     if (newBaseBalance < minBaseReserve || newQuoteBalance < minQuoteReserve) {
++         revert ErrReserveAmountNotEnough();
++     }
+
+}
+```
+
+**[L-11] The `symbols` of the `base` and `quote` tokens should be included in the `symbol` of `MagicLP`**
+-
+
+The name of `MagicLP` involves the names of the `base` and `quote` tokens.the 
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L155-L157
+```
+function name() public view override returns (string memory) {
+    return string(abi.encodePacked("MagicLP ", IERC20Metadata(_BASE_TOKEN_).symbol(), "/", IERC20Metadata(_QUOTE_TOKEN_).symbol()));
+}
+```
+But the `symbol` of `MagicLP` remains constant.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L159-L161
+```
+function symbol() public pure override returns (string memory) {
+    return "MagicLP";
+}
+```
+It should incorporate the `symbols` of the `base` and `quote` tokens.
+
+**[L-12] In some contracts, there are no functionality to claim `native yield` from `Blast`.**
+-
+
+Some contracts, such as `BlastMagicLP`, `BlastBox`, and `BlastOnboarding`, lack functionality for claiming `native yield` from `Blast`.
+
+**[L-13] Users are unable to create `locks` due to the `max locks checks` in the `staking` contract**
+-
+
+Only `operators` have the authority to clear the `expired locks` of users using the `processExpiredLocks` function. 
+However, even though this function should be called every `reward duration`, users cannot create `locks` when the `maxLocks` is set to `1`(the `reward duration` matches the `lock duration`). 
+Users can clear their expired `locks` when they create a `lock` and have already reached the `maximum lock count`.
