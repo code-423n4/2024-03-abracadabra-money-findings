@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Breeje",
+  "risk": "3",
+  "title": "Incorrect deployment of `MagicLP` will make zero address as owner and DoS every `onlyImplementationOwner` modifier functions",
+  "issueId": 184,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/184"
+}
