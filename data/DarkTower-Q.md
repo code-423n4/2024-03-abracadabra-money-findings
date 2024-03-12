@@ -102,7 +102,7 @@ However, this affects new pools deployed and old pools will still use the old ma
 
 For all swap functions in the [Router](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol), it doesn't validate that the `lp` address provided is an actual MagicLP. While we couldn't find a way to exploit this. Historically, this has been the cause of famous router hacks such as the famous Sushiswap hack - [https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023](https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023)
 
-## [L-07] `MagicLpAggregator` can't work if token has more than 18 decimals
+## [L-07] `MagicLpAggregator` can't work if any oracle returns more than 18 decimals
 
 It will revert due to underflow in `WAD - baseOracle.decimals()` or `WAD - quoteOracle.decimals()`.
 
