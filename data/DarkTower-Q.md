@@ -102,9 +102,9 @@ However, this affects new pools deployed and old pools will still use the old ma
 
 For all swap functions in the [Router](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/mimswap/periphery/Router.sol), it doesn't validate that the `lp` address provided is an actual MagicLP. While we couldn't find a way to exploit this. Historically, this has been the cause of famous router hacks such as the famous Sushiswap hack - [https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023](https://maxwelldulin.com/BlogPost/sushiswap-exploit-explained-2023)
 
-## [L-07] `MagicLpAggregator` can't work if any oracle returns more than 18 decimals
+## [L-07] `MagicLpAggregator` can't work with tokens with more than 18 decimals or if any token oracle returns more than 18 decimals 
 
-It will revert due to underflow in `WAD - baseOracle.decimals()` or `WAD - quoteOracle.decimals()`.
+It will revert if any token oracle returns more than 18 decimals due to underflow in `WAD - baseOracle.decimals()` or `WAD - quoteOracle.decimals()`.
 
 [MagicLpAggregator.sol#L38-L39](https://github.com/code-423n4/2024-03-abracadabra-money/blob/main/src/oracles/aggregators/MagicLpAggregator.sol#L38-L39)
 ```solidity
@@ -112,6 +112,13 @@ It will revert due to underflow in `WAD - baseOracle.decimals()` or `WAD - quote
         uint256 quoteAnswerNormalized = uint256(quoteOracle.latestAnswer()) * (10 ** (WAD - quoteOracle.decimals()));
 ```
 
+It can also revert for tokens with more than 18 decimals due to underflow in `(WAD - baseDecimals)` or `(WAD - quoteDecimals)`.
+
+[MagicLpAggregator.sol#L43-L44](https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/oracles/aggregators/MagicLpAggregator.sol#L43-L44)
+```solidity
+        baseReserve = baseReserve * (10 ** (WAD - baseDecimals));
+        quoteReserve = quoteReserve * (10 ** (WAD - quoteDecimals));
+```
 
 ## [R-01] Consider a clearer naming for the maximum boost multiplier that can be set in basis points
 
