@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Trust",
+  "risk": "2",
+  "title": "MagicLpAggregator always returns lower than correct answer, leading to arbitrage loss",
+  "issueId": 223,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/223"
+}
