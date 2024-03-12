@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Limbooo",
+  "risk": "2",
+  "title": "Pool Creation Failure Due to WETH Transfer Compatibility Issue on Some Chains",
+  "issueId": 237,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/237"
+}
