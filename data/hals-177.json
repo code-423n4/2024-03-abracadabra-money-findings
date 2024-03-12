@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hals",
+  "risk": "2",
+  "title": " `MagicLp` contract: updating base/quote tokens price (`_I_`) can be sandwiched by arbitrageurs",
+  "issueId": 177,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/177"
+}
