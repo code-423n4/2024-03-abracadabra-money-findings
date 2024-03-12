@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "grearlake",
+  "risk": "2",
+  "title": "User are not able to withdraw unlocked that deposited into LLE during contract pausing",
+  "issueId": 154,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/154"
+}
