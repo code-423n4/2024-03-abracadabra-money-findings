@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "cheatc0d3",
+  "risk": "2",
+  "title": "Dilution of Initial Liquidity Providers Shares in MagicLP::buyShares Disincentivizes other LPs",
+  "issueId": 138,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/138"
+}
