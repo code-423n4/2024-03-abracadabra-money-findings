@@ -76,3 +76,27 @@ The event that this function has doesn't even indicate how many assets have been
 To increase transparency towards users change the name to something more accurate such as `withdrawLPFunds()`. 
 Also add the assets withdrawn to the event.
 `emit withdrawLPFunds(newLpFeeRate, newI, newK, newBaseBalance, newQuoteBalance, quoteOutAmount, baseOutAmount);`
+
+
+## Missing configureGovernor call in BlastGovernor.sol
+
+## Links
+
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/blast/BlastGovernor.sol#L53-L55
+
+## Description
+
+In order to be able to claim fees a the constructor has to be set through the IBlast.configureGovernor(governor) call.
+But this function is not set. 
+The call can be done through the execute function.
+
+## Impact
+
+Impact is not severe as the call can be made through the execute function. but it would be best to have a function that actually implements this call.
+
+## Mitigation route 
+
+add the function in BlastYield or governor. It should incorporate this logic:
+```
+BLAST.configureGovernor(governor); 
+```
