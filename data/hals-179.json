@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "hals",
+  "risk": "3",
+  "title": "`MagicLp.flashLoan` function can be exploited to empty the contract base and quote tokens balances",
+  "issueId": 179,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/179"
+}
