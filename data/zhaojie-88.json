@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "zhaojie",
+  "risk": "2",
+  "title": "`MagicLpAggregator` cannot handle tokens with decimals greater than 18.",
+  "issueId": 88,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/88"
+}
