@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "HChang26",
+  "risk": "2",
+  "title": "Deprecated Chainlink Function Usage in MagicLpAggregator.sol May Yield Invalid Price Feeds",
+  "issueId": 82,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/82"
+}
