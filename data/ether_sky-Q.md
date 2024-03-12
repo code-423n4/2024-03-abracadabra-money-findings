@@ -174,3 +174,114 @@ function rescue(address token, address to, uint256 amount) external onlyOwner {
 ```
 By doing this, the `owner` can claim the donated `supported` tokens also.
 
+**[L-5] We cannot create the `MagicLP` when the `decimal` of the `quote` token is less than the `decimal` of the `base` token.**
+-
+
+When creating the `MagicLP` through the `router`, we validate the `decimals` of the `base` and `quote` tokens. 
+In case of `overflow/underflow`, the transaction will be reverted if the `decimal` of the `quote` token is less than the `decimal` of the `base` token.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/periphery/Router.sol#L598-L605
+```
+function _validateDecimals(uint8 baseDecimals, uint8 quoteDecimals) internal pure {
+    if (baseDecimals == 0 || quoteDecimals == 0) {
+        revert ErrZeroDecimals();
+    }
+    if (quoteDecimals - baseDecimals > MAX_BASE_QUOTE_DECIMALS_DIFFERENCE) {
+        revert ErrDecimalsDifferenceTooLarge();
+    }
+}
+```
+And obviously, `A/B MagicLP` is different from `B/A MagicLP` because the `shares` calculation is based on the `base` token. 
+It means that in some cases, we cannot create the necessary `MagicLP` due to `decimals`.
+
+Please modify like below:
+```
+function _validateDecimals(uint8 baseDecimals, uint8 quoteDecimals) internal pure {
+    if (baseDecimals == 0 || quoteDecimals == 0) {
+        revert ErrZeroDecimals();
+    }
+-     if (quoteDecimals - baseDecimals > MAX_BASE_QUOTE_DECIMALS_DIFFERENCE) {
++     if (quoteDecimals > MAX_BASE_QUOTE_DECIMALS_DIFFERENCE + baseDecimals || baseDecimals > MAX_BASE_QUOTE_DECIMALS_DIFFERENCE + quoteDecimals ) {
+        revert ErrDecimalsDifferenceTooLarge();
+    }
+}
+```
+
+**[L-6] There is no functionality to change the `fee rate model` in the `MagicLP`.**
+-
+
+When creating `MagicLP` using the `create` function in the `factory`, we insert `maintainerFeeRateModel` as the `fee rate model`. 
+This model will be used to calculate the `maintainer fee` in the `MagicLP`.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/periphery/Factory.sol#L86
+```
+function create(address baseToken_, address quoteToken_, uint256 lpFeeRate_, uint256 i_, uint256 k_) external returns (address clone) {
+    IMagicLP(clone).init(address(baseToken_), address(quoteToken_), lpFeeRate_, address(maintainerFeeRateModel), i_, k_);
+}
+```
+There is a functionality to change `maintainerFeeRateModel` in the `factory`.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/periphery/Factory.sol#L105-L112
+```
+function setMaintainerFeeRateModel(IFeeRateModel maintainerFeeRateModel_) external onlyOwner {
+    if (address(maintainerFeeRateModel_) == address(0)) {
+        revert ErrZeroAddress();
+    }
+
+    maintainerFeeRateModel = maintainerFeeRateModel_;
+    emit LogSetMaintainerFeeRateModel(maintainerFeeRateModel_);
+}
+```
+This implies that the `maintainerFeeRateModel` will require updating in the `future`.
+However, there's currently no functionality within `MagicLP` to modify the `fee rate model`. 
+Consequently, existing `MagicLP`s are unable to alter the `fee rate model`.
+
+Please add a functionality to change `fee rate model` in the `MagicLP`.
+
+**[L-7] Ensure to call the `_twapUpdate` function before making any changes to the `reserves`.**
+-
+
+There is a `_twapUpdate` function to calculate `cumulative price`.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L545-L558
+```
+function _twapUpdate() internal {
+    uint32 blockTimestamp = uint32(block.timestamp % 2 ** 32);
+    uint32 timeElapsed = blockTimestamp - _BLOCK_TIMESTAMP_LAST_;
+
+    if (timeElapsed > 0 && _BASE_RESERVE_ != 0 && _QUOTE_RESERVE_ != 0) {
+        unchecked {
+            _BASE_PRICE_CUMULATIVE_LAST_ += getMidPrice() * timeElapsed;
+        }
+    }
+
+    _BLOCK_TIMESTAMP_LAST_ = blockTimestamp;
+}
+```
+Ensure this function is invoked prior to modifying any `reserves`. 
+It's crucial to first update the `cumulative price` using the `previous reserves`, then proceed with `reserve` adjustments. 
+However, the current process involves calling the `_twapUpdate` function after modifying `reserves`. 
+Consequently, the `updated reserves` are multiplied by the `elapsed time`, leading to inaccuracies in the `cumulative price`.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L564
+```
+function _setReserve(uint256 baseReserve, uint256 quoteReserve) internal {
+    _BASE_RESERVE_ = baseReserve.toUint112();
+    _QUOTE_RESERVE_ = quoteReserve.toUint112();
+
+    _twapUpdate();
+}
+```
+The same for the `_sync` function.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L578
+```
+function _sync() internal {
+    uint256 baseBalance = _BASE_TOKEN_.balanceOf(address(this));
+    uint256 quoteBalance = _QUOTE_TOKEN_.balanceOf(address(this));
+    ....
+    _twapUpdate();
+}
+```
+The same for the `_resetTargetAndReserve` function.
+https://github.com/code-423n4/2024-03-abracadabra-money/blob/1f4693fdbf33e9ad28132643e2d6f7635834c6c6/src/mimswap/MagicLP.sol#L542
+```
+function _resetTargetAndReserve() internal returns (uint256 baseBalance, uint256 quoteBalance) {
+    _twapUpdate();
+}
+```
+Should call `_twapUpdate` function before making changes to the `reserves`.
