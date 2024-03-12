@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Trust",
+  "risk": "2",
+  "title": "Loss of assumed functionality of the Onboarding contract in a highly-sensitive area",
+  "issueId": 226,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/226"
+}
