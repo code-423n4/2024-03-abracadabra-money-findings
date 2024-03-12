@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "blutorque",
+  "risk": "3",
+  "title": "When R is not at equilibrium and the oracle price(`_I_`) updates accordingly, a case will occur where the trader `sellBase` and receive a quote amount of 0, due to how edge case is handled in `sellBaseToken` ",
+  "issueId": 121,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/121"
+}
