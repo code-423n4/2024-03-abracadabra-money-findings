@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "LinKenji",
+  "risk": "2",
+  "title": "BlastOnboarding's claimTokenYields, LockingMultiRewards _updateRewardsForUsers, Router _swap vulnerabilities may lead to gas exhaustion and DoS.",
+  "issueId": 145,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/145"
+}
