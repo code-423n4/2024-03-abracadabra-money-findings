@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "Bauchibred",
+  "risk": "2",
+  "title": "Protocol queries chainlink's deprecated pricing function which is not sufficiently validated and could return stale prices",
+  "issueId": 200,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/200"
+}
