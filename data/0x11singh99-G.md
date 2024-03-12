@@ -23,9 +23,9 @@
 - [G-10] [Within contract's function call should be cached instead of re-calling the same function](#g-10-within-contracts-function-call-should-be-cached-instead-of-re-calling-the-same-function)
 - [G-11] [Nesting `if`-statements is cheaper than using `&&`(**Gas Saved ~24 Gas**)](#g-11-nesting-if-statements-is-cheaper-than-using-gas-saved-24-gas)
 
-- [G-12] [`Switch` the order of `if` statement to fail early saves gas half of the time](#g-12-switch-the-order-of-if-statement-to-fail-early-saves-gas-half-of-the-times)
+- [G-12] [`Switch` the order of `if` statement to fail early saves gas(**~2000 Gas** of Gcoldsload) half of the time](#g-12-switch-the-order-of-if-statement-to-fail-early-saves-gas2000-gas-of-gcoldsload-half-of-the-times)
 - [G-13] [Refactor `_getRewards` function to save `1 SLOAD` by caching function call](#g-13-refactor-_getrewards-function-to-save-1-sload-by-caching-function-call)
-- [G-14] [Cache calculations instead of recalculating saves checked subtraction and checked multiplication](#g-14-cache-calculations-instead-of-recalculating-saves-checked-subtraction-and-checked-multiplication)
+- [G-14] [Cache calculations instead of recalculating saves checked subtraction and checked multiplication(**Gas Saved ~300 Gas**)](#g-14-cache-calculations-instead-of-recalculating-saves-checked-subtraction-and-checked-multiplicationgas-saved-300-gas)
 - [G-15] [Do not cache external call in stack variable if stack variable used only once](#g-15-do-not-cache-external-call-in-stack-variable-if-stack-variable-used-only-once)
 -
 
@@ -790,9 +790,9 @@ File : mimswap/MagicLP.sol
 +        }
 ```
 
-## [G-12] `Switch` the order of `if` statement to fail early saves gas half of the times
+## [G-12] `Switch` the order of `if` statement to fail early saves gas(**~2000 Gas** of Gcoldsload) half of the times
 
-It is recommended to order checks from low to high gas consuming
+It is recommended to order checks from low to high gas consuming to revert early.
 
 ### 2 Instances
 
@@ -975,9 +975,9 @@ File : staking/LockingMultiRewards.sol
 
 ```
 
-## [G-14] Cache calculations instead of recalculating saves checked subtraction and checked multiplication
+## [G-14] Cache calculations instead of recalculating saves checked subtraction and checked multiplication(**Gas Saved ~300 Gas**)
 
-#### Cache `idelta * V1` and `DecimalMath.ONE - k` saves checked multiplication and checked subtraction.
+#### Cache `idelta * V1` and `DecimalMath.ONE - k` saves checked multiplication and checked subtraction. It can save upto `~150 GAS`
 
 ```solidity
 File : mimswap/libraries/Math.sol
