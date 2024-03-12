@@ -1,0 +1,8 @@
+{
+  "contest": 349,
+  "handle": "HChang26",
+  "risk": "2",
+  "title": "Inconsistent Rounding in `_BASE_TARGET_` and `_QUOTE_TARGET_` will deviate away from true targets",
+  "issueId": 230,
+  "issueUrl": "https://github.com/code-423n4/2024-03-abracadabra-money-findings/issues/230"
+}
